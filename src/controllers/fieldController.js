@@ -19,7 +19,7 @@ exports.createField = [
       if (!collection) {
         return res.status(404).json({ message: 'Collection not found' });
       }
-      const fieldCount = await Field.count({ where: { collection_id, field_type, } });
+      const fieldCount = await Field.count({ where: { collection_id, field_type } });
       if (fieldCount >= 3) {
         return res.status(400).json({ message: `Cannot add more than 3 ${field_type} fields` });
       }

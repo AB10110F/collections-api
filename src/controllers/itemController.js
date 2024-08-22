@@ -52,13 +52,17 @@ exports.updateItem = [
   body('name').trim().escape().notEmpty().withMessage('Name required'),
 
   async (req, res) => {
-    const id = req.params;
-    const { name } = req.body;
-    const item = await Item.findByPk(id);
-    if (!item) {
-      return res.status(404).json({ message: 'Item not found' });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
     }
     try {
+      const id = req.params;
+      const { name } = req.body;
+      const item = await Item.findByPk(id);
+      if (!item) {
+        return res.status(404).json({ message: 'Item not found' });
+      }
       item.name = name || item.name;
       await item.save();
       res.status(200).json(item);

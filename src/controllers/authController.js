@@ -25,7 +25,7 @@ exports.login = async (req, res) => {
       }
     };
 
-    const token = jwt.sign({ id: user.id }, process.env.KEY, options);
+    const token = jwt.sign({ id: user.id, role: user.role }, process.env.KEY, options);
     res.json({ token });
   } catch (err) {
     res.status(500).json({ error: err.message });

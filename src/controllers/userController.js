@@ -38,7 +38,7 @@ exports.getUsers = async (req, res) => {
 
 exports.getUserById = async (req, res) => {
   try {
-    const { id } = req.params.id;
+    const id = req.params.id;
     const user = await User.findByPk(id);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
@@ -61,19 +61,16 @@ exports.updateUser = [
     }
 
     try {
-      const { id } = req.params;
+      const id = req.user.id; //comes from the current user jwt
       const { name, email, password } = req.body;
       const user = await User.findByPk(id);
-      if (!user) {
-        res.status(404).json({ message: 'User not found' });
-      }
       user.name = name || user.name;
       user.email = email || user.email;
       if (password) {
         const hashedPassword = await bcrypt.hash(password, 10);
         user.password = hashedPassword;
       }
-      user.last_login_time = new Date();
+      user.updated_at = new Date();
       await user.save();
       const { password: _, ...userData } = user.toJSON();
       res.status(200).json(userData);
@@ -93,14 +90,16 @@ exports.updateSudo = [
       return res.status(400).json({ errors: errors.array() });
     }
     try {
-      const { id } = req.params;
+      const id = req.params.id;
       const { status, role } = req.body;
       const user = await User.findByPk(id);
+      console.log(req.user);
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }
       user.role = role || user.role;
       user.status = status || user.status;
+      user.updated_at = new Date();
       await user.save();
       res.status(200).json({ message: 'User updated' });
     } catch (error) {
@@ -111,11 +110,8 @@ exports.updateSudo = [
 
 exports.deleteUser = async (req, res) => {
   try {
-    const { id } = req.params;
+    const id = req.user.id;
     const user = await User.findByPk(id);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
     await user.destroy();
     res.status(200).json({ message: 'User deleted' });
   } catch (error) {

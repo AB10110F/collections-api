@@ -14,8 +14,9 @@ exports.createCollection = [
     }
 
     try {
+      const user_id = req.user.id;
       const { name, description, category, image_url } = req.body;
-      const newCollection = await Collection.create({ name, description, category, image_url, user_id: req.user.id });
+      const newCollection = await Collection.create({ name, description, category, image_url, user_id });
       res.status(201).json(newCollection);
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -25,7 +26,8 @@ exports.createCollection = [
 
 exports.getCollections = async (req, res) => {
   try {
-    const collections = await Collection.findAll({ where: { user_id: req.user.id } });
+    const user_id = req.user.id;
+    const collections = await Collection.findAll({ where: { user_id } });
     res.status(200).json(collections);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -34,8 +36,8 @@ exports.getCollections = async (req, res) => {
 
 exports.getCollectionById = async (req, res) => {
   try {
-    const { id } = req.params;
-    const collection = await Collection.findOne({ where: { id, user_id: req.user.id } });
+    const id = req.params.id;
+    const collection = await Collection.findByPk(id);
     if (!collection) {
       return res.status(404).json({ message: 'Collection not found' });
     }
@@ -58,9 +60,10 @@ exports.updateCollection = [
     }
 
     try {
-      const { id } = req.params;
+      const id = req.params.id;
+      const user_id = req.user.id;
       const { name, description, category, image_url } = req.body;
-      const collection = await Collection.findOne({ where: { id, user_id: req.user.id } });
+      const collection = await Collection.findOne({ where: { id, user_id } });
       if (!collection) {
         return res.status(404).json({ message: 'Collection not found' });
       }
@@ -78,8 +81,9 @@ exports.updateCollection = [
 
 exports.deleteCollection = async (req, res) => {
   try {
-    const { id } = req.params;
-    const collection = await Collection.findOne({ where: { id, user_id: req.user.id } });
+    const id = req.params.id;
+    const user_id = req.user.id;
+    const collection = await Collection.findOne({ where: { id, user_id } });
     if (!collection) {
       return res.status(404).json({ message: 'Collection not found' });
     }

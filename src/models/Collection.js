@@ -47,7 +47,9 @@ const Collection = sequelize.define('Collection', {
 User.hasMany(Collection, {
   foreignKey: 'user_id',
 });
-Collection.belongsTo(User);
+Collection.belongsTo(User, {
+  foreignKey: 'user_id',
+});
 
 // Collection.associate = (models) => {
 //   Collection.belongsTo(models.User, {

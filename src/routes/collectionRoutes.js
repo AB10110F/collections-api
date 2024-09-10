@@ -5,7 +5,7 @@ const { authenticate, admin } = require('../middleware/auth');
 
 router.post('/collections', authenticate, collectionController.createCollection);
 router.get('/collections', authenticate, collectionController.getCollections);
-router.get('/collections/:id', authenticate, collectionController.getCollectionById);
+router.get('/collections/:id', collectionController.getCollectionById);
 router.put('/collections/:id', authenticate, collectionController.updateCollection);
 router.delete('/collections/:id', authenticate, collectionController.deleteCollection);
 

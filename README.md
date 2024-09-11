@@ -1,10 +1,10 @@
 # Collections API
 
-## User Routes
+## Users Routes
 
 ### Create user
 
-POST `http://localhost:3001/api/login`
+POST `http://localhost:3001/api/users`
 
 ### Login
 
@@ -20,7 +20,7 @@ Requires token
 
 ### Get user by id
 
-GET `http://localhost:3001/api/users/1`
+GET `http://localhost:3001/api/users/:id`
 
 Requires token
 
@@ -30,12 +30,42 @@ PUT `http://localhost:3001/api/users`
 
 ### Advance update potions
 
-PUT `http://localhost:3001/api/users/sudo/1`
+PUT `http://localhost:3001/api/users/sudo/:id`
 
 Requires token and admin privilege
 
 ### Delete User
 
 DELETE `http://localhost:3001/api/users`
+
+Requires token
+
+## Collections Routes
+
+### Create Collection
+
+POST `http://localhost:3001/api/collections`
+
+Requires token
+
+### Get all collections
+
+GET `http://localhost:3001/api/collections`
+
+Requires token
+
+### Get collection by id
+
+GET `http://localhost:3001/api/collections/:id`
+
+### Update Collection
+
+PUT `http://localhost:3001/api/collections/:id`
+
+Requires token
+
+### Delete Collection
+
+DELETE `http://localhost:3001/api/collections/:id`
 
 Requires token

@@ -69,3 +69,35 @@ Requires token
 DELETE `http://localhost:3001/api/collections/:id`
 
 Requires token
+
+## Fields Routes
+
+### Create Field
+
+POST `http://localhost:3001/api/fields/:id`
+
+The id must reference the collection of the field
+
+Requires token
+
+### Get All Fields
+
+GET `http://localhost:3001/api/fields/from/:id`
+
+The id must reference the collection of the fields
+
+### Get field by id
+
+GET `http://localhost:3001/api/fields/from/:id`
+
+### Update Field
+
+PUT `http://localhost:3001/api/fields/:id`
+
+Requires token
+
+### Delete Field
+
+DELETE `http://localhost:3001/api/fields/:id`
+
+Requires token

@@ -35,6 +35,8 @@ const Item = sequelize.define('Item', {
 Collection.hasMany(Item, {
   foreignKey: 'collection_id',
 });
-Item.belongsTo(Collection);
+Item.belongsTo(Collection, {
+  foreignKey: 'collection_id',
+});
 
 module.exports = Item;

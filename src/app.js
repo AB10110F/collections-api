@@ -7,6 +7,7 @@ const fieldValueRoutes = require('./routes/fieldValueRoutes');
 const likeRoutes = require('./routes/likeRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const tagRoutes = require('./routes/tagRoutes');
+const itemRoutes = require('./routes/itemRoutes');
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use(express.json());
 app.use('/api', userRoutes);
 app.use('/api', collectionRoutes);
 app.use('/api', fieldRoutes);
+app.use('/api', itemRoutes);
 app.use('/api', fieldValueRoutes);
 app.use('/api', likeRoutes);
 app.use('/api', commentRoutes);

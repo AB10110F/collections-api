@@ -11,8 +11,8 @@ exports.createItem = [
       return res.status(400).json({ errors: errors.array() });
     }
     try {
-      const name = req.body
-      const { collection_id } = req.params;
+      const { name } = req.body
+      const collection_id = req.params.id;
       const collection = await Collection.findByPk(collection_id);
       if (!collection) {
         return res.status(404).json({ message: 'Collection not found' });
@@ -27,7 +27,7 @@ exports.createItem = [
 
 exports.getItems = async (req, res) => {
   try {
-    const { collection_id } = req.params;
+    const collection_id = req.params.id;
     const items = await Item.findAll({ where: { collection_id } });
     res.status(200).json(items);
   } catch (error) {
@@ -37,7 +37,7 @@ exports.getItems = async (req, res) => {
 
 exports.getItemById = async (req, res) => {
   try {
-    const id = req.params;
+    const id = req.params.id;
     const item = await Item.findByPk(id);
     if (!item) {
       return res.status(404).json({ message: 'Item not found' });
@@ -57,7 +57,7 @@ exports.updateItem = [
       return res.status(400).json({ errors: errors.array() });
     }
     try {
-      const id = req.params;
+      const id = req.params.id;
       const { name } = req.body;
       const item = await Item.findByPk(id);
       if (!item) {
@@ -74,7 +74,8 @@ exports.updateItem = [
 
 exports.deleteItem = async (req, res) => {
   try {
-    const id = req.params;
+    const id = req.params.id;
+    console.log(id);
     const item = await Item.findByPk(id);
     if (!item) {
       return res.status(404).json({ message: 'Item not found' });

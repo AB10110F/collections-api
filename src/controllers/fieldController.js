@@ -13,7 +13,7 @@ exports.createField = [
     }
 
     try {
-      const collection_id = req.params;
+      const collection_id = req.params.id;
       const { name, field_type } = req.body;
       const collection = await Collection.findByPk(collection_id);
       if (!collection) {
@@ -33,7 +33,7 @@ exports.createField = [
 
 exports.getFields = async (req, res) => {
   try {
-    const collection_id = req.params;
+    const collection_id = req.params.id;
     const fields = await Field.findAll({ where: { collection_id } });
     res.status(200).json(fields);
   } catch (error) {
@@ -43,9 +43,9 @@ exports.getFields = async (req, res) => {
 
 exports.getFieldById = async (req, res) => {
   try {
-    const { id, collection_id } = req.params;
-    const field = await Field.findOne({ where: { id, collection_id } });
-    if (!id || !collection_id) {
+    const id = req.params.id;
+    const field = await Field.findOne({ where: { id } });
+    if (!field) {
       return res.status(404).json({ message: 'Field not found' });
     }
     res.status(200).json(field);
@@ -65,9 +65,9 @@ exports.updateField = [
     }
 
     try {
-      const { id, collection_id } = req.params;
+      const id = req.params.id;
       const { name, field_type } = req.body;
-      const field = await Field.findOne({ where: { id, collection_id } })
+      const field = await Field.findOne({ where: { id } })
       if (!field) {
         return res.status(404).json({ message: 'Field not found' });
       }
@@ -83,7 +83,7 @@ exports.updateField = [
 
 exports.deleteField = async (req, res) => {
   try {
-    const id = req.params;
+    const id = req.params.id;
     const field = await Field.findByPk(id)
     if (!field) {
       return res.status(404).json({ message: 'Field not found' });

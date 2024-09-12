@@ -39,6 +39,8 @@ const Field = sequelize.define('Field', {
 Collection.hasMany(Field, {
   foreignKey: 'collection_id',
 });
-Field.belongsTo(Collection);
+Field.belongsTo(Collection, {
+  foreignKey: 'collection_id',
+});
 
 module.exports = Field;
